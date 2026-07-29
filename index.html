@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anoy — Chemical Engineer / Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0D0F;
+    --surface: #14171A;
+    --surface-2: #191D21;
+    --line: #24282D;
+    --text: #ECEEF0;
+    --text-dim: #8A9099;
+    --cyan: #4CC9F0;
+    --orange: #FF6B35;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--cyan); color: #06070A; }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  h1, h2, h3, .display {
+    font-family: 'Archivo Black', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+  section { padding: 100px 0; position: relative; }
+
+  /* faint blueprint grid backdrop */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(76,201,240,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(76,201,240,0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 80%);
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(11,13,15,0.75);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; }
+  .brand { font-family: 'Archivo Black'; font-size: 18px; }
+  .brand span { color: var(--orange); }
+  .navlinks { display: flex; gap: 28px; font-size: 14px; color: var(--text-dim); }
+  .navlinks a { text-decoration: none; transition: color .2s; }
+  .navlinks a:hover { color: var(--cyan); }
+  @media (max-width: 720px) { .navlinks { display: none; } }
+
+  /* HERO */
+  .hero { padding-top: 90px; padding-bottom: 70px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono'; font-size: 12px; color: var(--cyan);
+    border: 1px solid rgba(76,201,240,0.35); background: rgba(76,201,240,0.06);
+    padding: 6px 12px; border-radius: 100px; margin-bottom: 26px;
+  }
+  .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  .hero h1 { font-size: clamp(40px, 7vw, 84px); }
+  .hero h1 .accent-o { color: var(--orange); }
+  .hero-sub {
+    max-width: 560px; color: var(--text-dim); font-size: 18px; margin-top: 22px;
+  }
+  .hero-actions { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'JetBrains Mono'; font-size: 13px; text-decoration: none;
+    padding: 13px 22px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary { background: var(--orange); color: #100804; font-weight: 700; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,53,0.3); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* SPEC SHEET — signature element */
+  .spec {
+    margin-top: 56px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .spec-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 20px; border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+    font-family: 'JetBrains Mono'; font-size: 12px; color: var(--text-dim);
+  }
+  .spec-head .tag { color: var(--cyan); }
+  .spec-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .spec-field {
+    padding: 18px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .spec-field:nth-child(4n) { border-right: none; }
+  .spec-field label {
+    display: block; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
+  }
+  .spec-field .val { font-size: 15px; font-weight: 600; }
+  .spec-field .val.orange { color: var(--orange); }
+  .spec-field .val.cyan { color: var(--cyan); }
+
+  /* SECTION HEADERS */
+  .sec-label {
+    font-family: 'JetBrains Mono'; font-size: 13px; color: var(--text-dim);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+  }
+  .sec-label .num { color: var(--cyan); }
+  .sec-title { font-size: clamp(28px, 4vw, 44px); margin-bottom: 46px; }
+  .sec-title .o { color: var(--orange); }
+
+  /* ABOUT — split identity */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+  .id-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 32px; position: relative; overflow: hidden;
+  }
+  .id-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .id-card.eng::before { background: var(--cyan); }
+  .id-card.build::before { background: var(--orange); }
+  .id-card .k { font-family: 'JetBrains Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .id-card.eng .k { color: var(--cyan); }
+  .id-card.build .k { color: var(--orange); }
+  .id-card h3 { font-size: 24px; margin-bottom: 14px; }
+  .id-card p { color: var(--text-dim); font-size: 15px; }
+
+  /* PROJECTS / STREAMS */
+  .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .cards-3 { grid-template-columns: 1fr; } }
+  .proj-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 26px; transition: border-color .2s, transform .2s;
+  }
+  .proj-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+  .proj-tag {
+    font-family: 'JetBrains Mono'; font-size: 11px; color: var(--orange);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .proj-card h3 { font-size: 19px; margin: 12px 0 10px; font-family: 'Inter'; font-weight: 700; }
+  .proj-card p { color: var(--text-dim); font-size: 14px; margin: 0; }
+  .proj-status {
+    display: inline-block; margin-top: 16px; font-family: 'JetBrains Mono'; font-size: 11px;
+    padding: 4px 10px; border-radius: 100px; border: 1px solid var(--line); color: var(--text-dim);
+  }
+
+  /* TOOLKIT */
+  .toolkit { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tool-chip {
+    font-family: 'JetBrains Mono'; font-size: 13px;
+    border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px;
+    color: var(--text-dim); transition: all .2s;
+  }
+  .tool-chip:hover { color: var(--text); border-color: var(--cyan); }
+
+  /* CONTACT */
+  .contact-box {
+    background: linear-gradient(135deg, rgba(76,201,240,0.08), rgba(255,107,53,0.08));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 56px; text-align: center;
+  }
+  .contact-box h2 { font-size: clamp(26px, 4vw, 40px); margin-bottom: 16px; }
+  .contact-box p { color: var(--text-dim); max-width: 480px; margin: 0 auto 30px; }
+  .social-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  footer { padding: 40px 0; border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer .mono { font-size: 12px; color: var(--text-dim); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">ANOY<span>.</span></div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#content">Content</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">STATUS: BUILDING — BUET, DHAKA</div>
+    <h1>Engineering the<br>process. <span class="accent-o">Building</span><br>the physique.</h1>
+    <p class="hero-sub">
+      Chemical Engineering student at BUET, working through material balances and thermodynamics by day —
+      training, filming, and building a fitness channel by choice. Two disciplines, one obsession with the fundamentals.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-primary">See the work →</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+
+    <div class="spec reveal" id="spec">
+      <div class="spec-head">
+        <span><span class="tag">SUBJECT</span>&nbsp;// Anoy — personal profile sheet</span>
+        <span>REV. 2026</span>
+      </div>
+      <div class="spec-body">
+        <div class="spec-field"><label>Program</label><div class="val">ChE, BUET</div></div>
+        <div class="spec-field"><label>Class Standing</label><div class="val cyan">2nd Year</div></div>
+        <div class="spec-field"><label>Est. Graduation</label><div class="val">2030</div></div>
+        <div class="spec-field"><label>Training</label><div class="val orange">6 days / week</div></div>
+        <div class="spec-field"><label>Content Niche</label><div class="val orange">Gym &amp; Fitness</div></div>
+        <div class="spec-field"><label>Core Courses</label><div class="val cyan">Mat. Balances, Thermo</div></div>
+        <div class="spec-field"><label>Long-Term Goal</label><div class="val">Financial Independence</div></div>
+        <div class="spec-field"><label>Location</label><div class="val">Dhaka, BD</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-label"><span class="num">01</span> Identity</div>
+    <h2 class="sec-title">Two streams, <span class="o">one system</span>.</h2>
+    <div class="split">
+      <div class="id-card eng reveal">
+        <div class="k">Stream A — Engineer</div>
+        <h3>The problem solver</h3>
+        <p>
+          I work through material balances, thermodynamics, and process design the way most people work through
+          a puzzle — step by step, checked against the answer key. Recycle streams, reactive systems, combustion
+          problems, power cycles — I like the discipline of a problem that has exactly one correct balance.
+        </p>
+      </div>
+      <div class="id-card build reveal">
+        <div class="k">Stream B — Builder</div>
+        <h3>The content creator</h3>
+        <p>
+          Outside the classroom, I train with the same rigor — tracking recomposition, dialing in nutrition,
+          and learning to edit and tell that story on camera. The channel is early, the niche is set: real
+          training, explained properly, for people who want to understand the "why" and not just the routine.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-label"><span class="num">02</span> Active Streams</div>
+    <h2 class="sec-title">What I'm <span class="o">building</span> right now.</h2>
+    <div class="cards-3">
+      <div class="proj-card reveal">
+        <span class="proj-tag">Engineering</span>
+        <h3>Process &amp; balance problem sets</h3>
+        <p>Worked solutions to material balance, thermodynamics, and equilibrium problems — recycle/bypass/purge systems, reactive balances, and Excel Solver models.</p>
+        <span class="proj-status">Placeholder — link soon</span>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-tag">Content</span>
+        <h3>Fitness &amp; training channel</h3>
+        <p>A YouTube channel on gym training and body recomposition, edited in DaVinci Resolve — built around clear, evidence-based explanations rather than trends.</p>
+        <span class="proj-status">Placeholder — link soon</span>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-tag">Build</span>
+        <h3>Personal edit &amp; render rig</h3>
+        <p>A Ryzen 5 7500F + RTX 5060 build assembled for video editing, coding, and light gaming — the physical infrastructure behind the content pipeline.</p>
+        <span class="proj-status">Placeholder — link soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="content">
+  <div class="wrap">
+    <div class="sec-label"><span class="num">03</span> Content Philosophy</div>
+    <h2 class="sec-title">Train like it's <span class="o">a system</span>, not a mood.</h2>
+    <div class="split">
+      <div class="id-card build reveal">
+        <div class="k">Approach</div>
+        <h3>Recomposition, tracked</h3>
+        <p>
+          Calorie and macro targets set from real stats, training six days a week, supplementation chosen for
+          the goal rather than the label on the tub. The content documents that process honestly — what's working,
+          what isn't, and why.
+        </p>
+      </div>
+      <div class="id-card eng reveal">
+        <div class="k">Delivery</div>
+        <h3>Engineer's eye, gym floor</h3>
+        <p>
+          The same instinct that wants a clean derivation shows up in how I plan a video — a clear structure,
+          a stated hypothesis, and a result you can check for yourself. Fitness content, explained like a
+          problem set.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="toolkit">
+  <div class="wrap">
+    <div class="sec-label"><span class="num">04</span> Toolkit</div>
+    <h2 class="sec-title">What I build <span class="o">with</span>.</h2>
+    <div class="toolkit">
+      <span class="tool-chip">Material &amp; Energy Balances</span>
+      <span class="tool-chip">Excel Solver</span>
+      <span class="tool-chip">Python</span>
+      <span class="tool-chip">DaVinci Resolve</span>
+      <span class="tool-chip">Process Thermodynamics</span>
+      <span class="tool-chip">Linear Algebra</span>
+      <span class="tool-chip">Video Scripting</span>
+      <span class="tool-chip">Training Programming</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box reveal">
+      <h2>Let's build <span class="o" style="color:var(--orange)">something</span>.</h2>
+      <p>Open to conversations on engineering, content collaborations, or anything in between. Reach out below.</p>
+      <div class="social-row">
+        <a href="#" class="btn btn-ghost">Email</a>
+        <a href="#" class="btn btn-ghost">YouTube</a>
+        <a href="#" class="btn btn-ghost">LinkedIn</a>
+        <a href="#" class="btn btn-ghost">Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">© 2026 Anoy — Dhaka, Bangladesh</span>
+    <span class="mono">Built with material balance and muscle memory.</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
