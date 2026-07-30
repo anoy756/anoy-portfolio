@@ -3,23 +3,65 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Anoy — Chemical Engineer / Builder</title>
+<title>Anoy_Chemical_Engineer</title>
+<meta name="description" content="Portfolio of Anoy — Chemical Engineering student at BUET and fitness content creator. Engineering the process, building the physique." />
+<meta property="og:title" content="Anoy — Chemical Engineer / Builder" />
+<meta property="og:description" content="Chemical Engineering student at BUET, training and building a fitness channel on the side." />
+<meta property="og:type" content="website" />
 <link rel="icon" type="image/png" href="favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #0B0D0F;
-    --surface: #14171A;
-    --surface-2: #191D21;
-    --line: #24282D;
-    --text: #ECEEF0;
-    --text-dim: #8A9099;
-    --cyan: #4CC9F0;
-    --orange: #FF6B35;
-    --radius: 14px;
-  }
+/* Default Dark Mode Theme */
+:root {
+  --bg: #080D0F;
+  --surface: #14171A;
+  --surface-2: #191D21;
+  --text: #ECEEF0;
+  --text-dim: #849099;
+  --border: rgba(255, 255, 255, 0.1);
+  --orange: #FF6B35;
+  --cyan: #4CC9F0;
+}
+
+/* Light Mode Overrides */
+body.light-mode {
+  --bg: #F4F6F8;
+  --surface: #FFFFFF;
+  --surface-2: #EAEFF2;
+  --text: #0D1117;
+  --text-dim: #57606A;
+  --border: rgba(0, 0, 0, 0.12);
+}
+
+/* Base Body Styles using CSS Variables */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Toggle Button Styling */
+.theme-toggle-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height:1;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--orange);
+}
+
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -71,8 +113,8 @@
   nav .wrap { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; }
   .brand { font-family: 'Archivo Black'; font-size: 18px; }
   .brand span { color: var(--orange); }
-  .navlinks { display: flex; gap: 28px; font-size: 14px; color: #A0A6B0; font-weight: 500; }
-  .navlinks a { text-decoration: none; transition: color .2s; }
+  .navlinks { display: flex; align-items: center; gap: 24px; font-size: 14px; color: #A0A6B0; font-weight: 500; }
+  .navlinks a { text-decoration: none; color: var(--text);font-size: 0.95rem;display: inline-flex;align-items: center; transition: color .2s; }
   .navlinks a:hover { color: var(--cyan); }
   @media (max-width: 720px) { .navlinks { display: none; } }
 
@@ -103,6 +145,100 @@
     padding: 13px 22px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;
     transition: transform .15s ease, box-shadow .15s ease; border: none; cursor: pointer;
   }
+  /* Modern CV Button Styling */
+.btn-modern-cv {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text, #ECEEF0);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Icon Styling */
+.btn-modern-cv .cv-icon {
+  stroke: var(--text-dim, #849099);
+  transition: transform 0.25s ease, stroke 0.25s ease;
+}
+
+/* Hover Effects */
+.btn-modern-cv:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--orange, #FF6B35);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.15); /* Accent glow */
+}
+
+/* Animate icon downward on hover */
+.btn-modern-cv:hover .cv-icon {
+  stroke: var(--orange, #FF6B35);
+  transform: translateY(2px);
+}
+
+/* Active Click State */
+.btn-modern-cv:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+   /* Container for the buttons (to align them) */
+.button-group {
+  display: flex;
+  gap: 16px; /* Space between buttons */
+  align-items: center;
+}
+
+/* Polished styling for the CV Download Button */
+.cv-download-btn {
+  /* 1. Reset standard link styles */
+  text-decoration: none !important; /* Remove the underline */
+  color: #849099 !important; /* Text color - using the dark grey from your site */
+
+  /* 2. Make it look like a button */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between the icon and text */
+  padding: 12px 24px; /* Internal spacing (top/bottom, left/right) */
+  border-radius: 8px; /* Rounded corners to match the orange button */
+
+  /* 3. Button appearance */
+  background-color: transparent; /* Or a darker grey if you prefer, e.g., #14171a */
+  border: 1px solid #24282D; /* A subtle dark border, seen in your toolkit bars */
+  
+  /* 4. Text styling to match your site's monospace aesthetic */
+  font-family: 'JetBrains Mono', monospace; /* Assuming you are using this font */
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+
+  /* 5. Smooth transition on hover */
+  transition: all 0.3s ease;
+}
+
+/* Polished Hover Effect */
+.cv-download-btn:hover {
+  background-color: #14171a; /* Slight dark grey fill on hover */
+  border-color: #f05a28; /* The orange accent color on border */
+  color: #fff !important; /* Text turns white on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Subtle depth shadow */
+}
+
+/* Active/Focus state for accessibility */
+.cv-download-btn:active {
+  transform: translateY(1px); /* Micro-interaction: button pushes down slightly */
+}
   .btn-primary { background: var(--orange); color: #100804; font-weight: 700; }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,53,0.3); }
   .btn-ghost { border: 1px solid var(--line); color: var(--text); background: transparent; }
@@ -186,7 +322,20 @@
     cursor: pointer; z-index: 90; transition: all 0.2s;
   }
   #top-btn:hover { border-color: var(--cyan); transform: translateY(-3px); }
-
+  
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 90, 40, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  z-index: 1;
+}
   /* VIDEO MODAL */
   .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
   .modal-content { position: relative; width: 100%; max-width: 800px; aspect-ratio: 16/9; }
@@ -202,7 +351,7 @@
 </style>
 </head>
 <body>
-
+<div class="cursor-glow" id="cursorGlow"></div>
 <div id="progress-bar"></div>
 <div class="grid-bg"></div>
 
@@ -217,6 +366,10 @@
       <a href="#work">Work</a>
       <a href="#toolkit">Toolkit</a>
       <a href="#contact">Contact</a>
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+  <!-- Sun Icon for Light Mode / Moon Icon for Dark Mode -->
+        <span id="theme-icon">🌙</span>
+</button>
     </div>
   </div>
 </nav>
@@ -234,7 +387,20 @@
     </p>
     <div class="hero-actions">
       <a href="#work" class="btn btn-primary">See the work →</a>
-      <a href="Anoy_Saha_Resume.pdf" download class="btn btn-ghost">📄 Download CV</a>
+       <div class="button-group">
+  
+
+  <!-- This is the new hyperlink -->
+  <a href="Anoy_Chandra_Saha_CV.pdf" download="Anoy_Chandra_Saha_CV.pdf" class="btn btn-modern-cv">
+  <span>Download CV</span>
+  <!-- Modern Minimal Download Arrow Icon -->
+  <svg class="cv-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <polyline points="7 10 12 15 17 10"></polyline>
+    <line x1="12" y1="15" x2="12" y2="3"></line>
+  </svg>
+</a>
+</div>
     </div>
 
     <div class="spec reveal">
@@ -468,6 +634,35 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
+</script>
+<script>
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+
+// 1. Check saved theme from localStorage or system preference
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+if (savedTheme === 'light' || (!savedTheme && systemPrefersLight)) {
+  document.body.classList.add('light-mode');
+  themeIcon.textContent = '☀️';
+} else {
+  themeIcon.textContent = '🌙';
+}
+
+// 2. Add click event listener to toggle themes
+themeToggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+
+  // Check if light mode is currently active
+  const isLight = document.body.classList.contains('light-mode');
+
+  // Update Icon
+  themeIcon.textContent = isLight ? '☀️' : '🌙';
+
+  // Save choice to localStorage
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+});  
 </script>
 
 </body>
