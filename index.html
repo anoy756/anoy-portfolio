@@ -21,6 +21,7 @@
   --text: #ECEEF0;
   --text-dim: #849099;
   --border: rgba(255, 255, 255, 0.1);
+  --radius: 12px;
   --orange: #FF6B35;
   --cyan: #4CC9F0;
 }
@@ -83,8 +84,8 @@ body {
     margin: 0;
   }
   a { color: inherit; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
-  section { padding: 100px 0; position: relative; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; position: relative}
+  section { padding: 80px 0; position: relative; }
 
   /* SCROLL PROGRESS BAR */
   #progress-bar {
@@ -145,53 +146,6 @@ body {
     padding: 13px 22px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;
     transition: transform .15s ease, box-shadow .15s ease; border: none; cursor: pointer;
   }
-  /* Modern CV Button Styling */
-.btn-modern-cv {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px 22px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text, #ECEEF0);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Icon Styling */
-.btn-modern-cv .cv-icon {
-  stroke: var(--text-dim, #849099);
-  transition: transform 0.25s ease, stroke 0.25s ease;
-}
-
-/* Hover Effects */
-.btn-modern-cv:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: var(--orange, #FF6B35);
-  color: #FFFFFF;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.15); /* Accent glow */
-}
-
-/* Animate icon downward on hover */
-.btn-modern-cv:hover .cv-icon {
-  stroke: var(--orange, #FF6B35);
-  transform: translateY(2px);
-}
-
-/* Active Click State */
-.btn-modern-cv:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
    /* Container for the buttons (to align them) */
 .button-group {
   display: flex;
@@ -255,11 +209,37 @@ body {
   .spec-field .val.orange { color: var(--orange); }
   .spec-field .val.cyan { color: var(--cyan); }
 
+  /* Spec / Profile Sheet (The big box in your screenshot) */
+.spec, 
+.profile-sheet,
+.card, 
+.stream-card {
+  border-radius: var(--radius, 12px) !important;
+  overflow: hidden; /* Important: prevents child elements/headers from overflowing the rounded corners */
+}
+
   /* SECTION HEADERS */
   .sec-label { font-family: 'JetBrains Mono'; font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
   .sec-label .num { color: var(--cyan); }
   .sec-title { font-size: clamp(28px, 4vw, 44px); margin-bottom: 46px; }
   .sec-title .o { color: var(--orange); }
+
+  /* Section Tag Styling */
+.sec-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--text-dim, #849099);
+  margin-bottom: 8px;
+}
+
+.sec-tag span {
+  color: var(--cyan, #4CC9F0); /* Cyan color for 03 and 04 */
+}
+
+/* Orange text accent */
+.orange {
+  color: var(--orange, #FF6B35);
+}
 
   /* ABOUT — split identity */
   .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -299,14 +279,49 @@ body {
   .proj-card p { color: var(--text-dim); font-size: 14px; margin: 0; }
   .proj-status { display: inline-block; margin-top: 16px; font-family: 'JetBrains Mono'; font-size: 11px; padding: 4px 10px; border-radius: 100px; border: 1px solid var(--line); color: var(--text-dim); text-decoration: none; }
 
-  /* TOOLKIT */
-  .toolkit { display: flex; flex-wrap: wrap; gap: 12px; }
-  .tool-chip {
-    font-family: 'JetBrains Mono'; font-size: 13px;
-    border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px;
-    color: var(--text-dim); transition: all .2s;
-  }
-  .tool-chip:hover { color: var(--text); border-color: var(--cyan); }
+  /* Toolkit Grid Layout */
+.toolkit-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Base Skill Tag */
+.toolkit-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--surface, #14171a);
+  border: 1px solid var(--line, #24282d);
+  border-radius: 6px;
+  color: var(--text-dim, #849099);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.toolkit-item:hover {
+  border-color: var(--cyan, #4CC9F0);
+  color: var(--text, #eceef0);
+}
+
+/* "Learning" Badge Accent */
+.toolkit-item.learning {
+  border-color: rgba(76, 201, 240, 0.3); /* Subtle cyan tint */
+}
+
+.badge-learning {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(76, 201, 240, 0.15);
+  color: var(--cyan, #4CC9F0);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
 
   /* CONTACT FORM */
   .contact-box { background: linear-gradient(135deg, rgba(76,201,240,0.08), rgba(255,107,53,0.08)); border: 1px solid var(--line); border-radius: var(--radius); padding: 48px; }
@@ -322,6 +337,26 @@ body {
     cursor: pointer; z-index: 90; transition: all 0.2s;
   }
   #top-btn:hover { border-color: var(--cyan); transform: translateY(-3px); }
+
+  .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px; /* Internal spacing to match button height */
+  border-radius: var(--radius, 8px); /* Rounded corners */
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.15)); /* Visible border */
+  background: transparent;
+  color: var(--text, #eceef0);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* Hover Effect */
+.btn-ghost:hover {
+  border-color: var(--orange, #ff6b35); /* Border turns orange on hover */
+  background: rgba(255, 255, 255, 0.05); /* Subtle hover fill */
+  color: #ffffff;
+}
   
 .cursor-glow {
   position: fixed;
@@ -348,6 +383,54 @@ body {
 
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.in { opacity: 1; transform: translateY(0); }
+
+ /* Initial hidden state */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Revealed active state */
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Card Hover Elevation & Glow */
+.card, .spec, .toolkit-item {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover, .spec:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 107, 53, 0.4); /* Soft orange border highlight */
+  box-shadow: 0 12px 30px -10px rgba(255, 107, 53, 0.15); /* Ambient glow */
+}
+
+/* Interactive Button Magnetic Hover Effect */
+.btn {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.25);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+/* Stagger delays for toolkit tags */
+.toolkit-grid .toolkit-item:nth-child(1) { transition-delay: 0.05s; }
+.toolkit-grid .toolkit-item:nth-child(2) { transition-delay: 0.10s; }
+.toolkit-grid .toolkit-item:nth-child(3) { transition-delay: 0.15s; }
+.toolkit-grid .toolkit-item:nth-child(4) { transition-delay: 0.20s; }
+.toolkit-grid .toolkit-item:nth-child(5) { transition-delay: 0.25s; }
+.toolkit-grid .toolkit-item:nth-child(6) { transition-delay: 0.30s; }
+.toolkit-grid .toolkit-item:nth-child(7) { transition-delay: 0.35s; }
+.toolkit-grid .toolkit-item:nth-child(8) { transition-delay: 0.40s; }
 </style>
 </head>
 <body>
@@ -391,7 +474,7 @@ body {
   
 
   <!-- This is the new hyperlink -->
-  <a href="Anoy_Chandra_Saha_CV.pdf" download="Anoy_Chandra_Saha_CV.pdf" class="btn btn-modern-cv">
+  <a href="Anoy_Chandra_Saha_CV.pdf" download="Anoy_Chandra_Saha_CV.pdf" class="btn btn-ghost">
   <span>Download CV</span>
   <!-- Modern Minimal Download Arrow Icon -->
   <svg class="cv-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -513,21 +596,38 @@ body {
 </section>
 
 <!-- TOOLKIT -->
-<section id="toolkit">
-  <div class="wrap">
-    <div class="sec-label"><span class="num">04</span> Toolkit</div>
-    <h2 class="sec-title">What I build <span class="o">with</span>.</h2>
-    <div class="toolkit">
-      <span class="tool-chip">Material &amp; Energy Balances</span>
-      <span class="tool-chip">Excel Solver</span>
-      <span class="tool-chip">Python</span>
-      <span class="tool-chip">DaVinci Resolve</span>
-      <span class="tool-chip">Process Thermodynamics</span>
-      <span class="tool-chip">Linear Algebra</span>
-      <span class="tool-chip">Video Scripting</span>
-      <span class="tool-chip">Training Programming</span>
+<section id="toolkit" class="toolkit-section">
+  <div class="wrap"> <!-- Added container wrapper -->
+    <div class="sec-tag"><span>04</span> Toolkit</div>
+<h2 class="sec-title">What I build <span class="orange">with.</span></h2>
+  
+
+    <div class="toolkit-grid">
+      <!-- Skills Items -->
+      <div class="toolkit-item">Material & Energy Balances</div>
+      <div class="toolkit-item">Excel Solver</div>
+      <div class="toolkit-item">Python</div>
+      <div class="toolkit-item">DaVinci Resolve</div>
+      <div class="toolkit-item">Process Thermodynamics</div>
+      <div class="toolkit-item">Linear Algebra</div>
+      <div class="toolkit-item">Video Scripting</div>
+      <div class="toolkit-item">Training Programming</div>
+
+      <!-- Learning Items -->
+      <div class="toolkit-item learning">
+        Video Editing <span class="badge-learning">Learning</span>
+      </div>
+      <div class="toolkit-item learning">
+        AI Automation <span class="badge-learning">Learning</span>
+      </div>
+      <div class="toolkit-item learning">
+        Spoken English <span class="badge-learning">Learning</span>
+      </div>
+      <div class="toolkit-item learning">
+        Guitar <span class="badge-learning">Learning</span>
+      </div>
     </div>
-  </div>
+  </div> <!-- Close wrap -->
 </section>
 
 <!-- CONTACT FORM & SOCIALS -->
@@ -634,6 +734,26 @@ body {
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
+
+  // Fade-in animation on scroll
+const observerOptions = {
+  threshold: 0.1, // Triggers when 10% of the element is visible
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('reveal-visible');
+    }
+  });
+}, observerOptions);
+
+// Target sections, cards, and spec sheets
+document.querySelectorAll('section, .card, .spec, .toolkit-item').forEach((el) => {
+  el.classList.add('reveal-hidden');
+  observer.observe(el);
+});
 </script>
 <script>
 const themeToggleBtn = document.getElementById('theme-toggle');
